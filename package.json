@@ -1,7 +1,7 @@
 {
   "name": "babel-plugin-react-data-test-camelcase",
   "description": "This plugin transforms a 'dataTest' attribute to a 'data-test' attribute in React components.",
-  "version": "0.1",
+  "version": "0.0.1",
   "main": "lib/index.js",
   "author": "elParking <antonio.juan@elparking.com>",
   "license": "MIT",
