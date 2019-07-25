@@ -30,10 +30,7 @@
   "babel": {
     "presets": [
       [
-        "shopify/node",
-        {
-          "version": "6.0.0"
-        }
+        "babel-preset-shopify"
       ]
     ]
   },
@@ -46,12 +43,12 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
-    "babel-jest": "^20.0.3",
-    "babel-preset-shopify": "^16.0.2",
-    "eslint": "^3.19.0",
-    "eslint-plugin-shopify": "^16.0.1",
+    "babel-jest": "^24.8.0",
+    "babel-preset-shopify": "^20.0.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-shopify": "^30.0.1",
     "in-publish": "^2.0.0",
-    "jest": "^20.0.4",
+    "jest": "^24.8.0",
     "prettier": "^1.17.1"
   },
   "dependencies": {}
