@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`babelPluginReactDataTestCamelcaseComponent() adds the attribute to the first non-composite component 1`] = `
+"function MyComponent() {
+  const t = 1;
+  return <SomeOtherComponent><div><div dataTest={\`description-id-\${t}\`} /></div></SomeOtherComponent>;
+}"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() does not add attributes to composite components 1`] = `
+"function MyComponent() {
+  const t = 1;
+  return <SomeOtherComponent dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`} />;
+}"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handle properly a class render methods 1`] = `
+"class MyComponent extends React.Component {
+  renderAnotherThing() {
+    return <div dataTest=\\"id-info-AnotherThing\\" data-test=\\"id-info-AnotherThing\\" />;
+  }
+  render() {
+    return <div dataTest=\\"id-info\\" data-test=\\"id-info\\">{this.renderAnotherThing()}</div>;
+  }
+}"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handle properly passing attributes beetween class render methods 1`] = `
+"class MyComponent1 extends React.Component {
+  render() {
+    return <div dataTest={this.props.dataTest} data-test={this.props.dataTest}>Info</div>;
+  }
+}
+
+MyComponent1.propTypes = {
+  dataTest: PropTypes.string
+};
+
+MyComponent1.defaultProps = {
+  dataTest: PropTypes.string
+};
+
+class MyComponent2 extends React.Component {
+  render() {
+    return <MyComponent1 dataTest=\\"id-info\\" data-test=\\"id-info\\" />;
+  }
+}"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handle when bail early if we are in a different function than the component 1`] = `
+"class MyComponent2 extends React.Component {
+  render() {
+    return <MyComponent1 dataTest=\\"id-info\\" data-test=\\"id-info\\" />;
+  }
+}"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handles a conlfict 1`] = `
+"function MyComponent() {
+  return <div data-test=\\"id-test-1\\" dataTest=\\"description-id\\" />;
+}"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handles a data-test explicit definition 1`] = `
+"function MyComponent() {
+  return <div key=\\"uno\\" data-test=\\"id-test-2\\" data-info=\\"my data info\\" />;
+}"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handles a inline component 1`] = `
+"const MyComponent2 = () => {
+  return <SomeOtherComponent dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`}></SomeOtherComponent>;
+};"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handles a inline component without return 1`] = `"const MyComponent3 = () => <SomeOtherComponent dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`}></SomeOtherComponent>;"`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handles simple complex returns 1`] = `
+"function MyComponent() {
+  const t = 'description-id';
+  return <div dataTest={t} data-test={t} />;
+}"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handles simple inline complex returns 1`] = `
+"function MyComponent() {
+  const t = 1;
+  return <div dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`} />;
+}"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handles simple returns 1`] = `
+"function MyComponent() {
+  return <div dataTest=\\"description-id\\" data-test=\\"description-id\\" />;
+}"
+`;
