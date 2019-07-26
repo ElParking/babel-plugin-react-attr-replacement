@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node@8/8.15.1/bin/node /usr/local/bin/yarn add babel-preset-babel-env
+  /usr/local/Cellar/node@8/8.15.1/bin/node /usr/local/bin/yarn build
 
 PATH: 
   /usr/local/opt/node@8/bin:/Volumes/parkingdoor/parkingdoor-backend/docker/scripts/:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/opt/node@8/bin:/Volumes/parkingdoor/parkingdoor-backend/docker/scripts/
@@ -14,17 +14,13 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/babel-preset-babel-env: Not found
-      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66058:18)
-      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:129541:22)
-      at emitTwo (events.js:126:13)
-      at Request.emit (events.js:214:7)
-      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:130513:10)
-      at emitOne (events.js:116:13)
-      at Request.emit (events.js:211:7)
-      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:130435:12)
-      at Object.onceWrapper (events.js:313:30)
-      at emitNone (events.js:111:20)
+  SyntaxError: /Volumes/parkingdoor/babel-plugin-react-data-test-camelcase/package.json: Unexpected string in JSON at position 818
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:304:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:315:13
+      at <anonymous>
 
 npm manifest: 
   {
@@ -48,19 +44,21 @@ npm manifest:
       "lib"
     ],
     "eslintConfig": {
-      "extends": "react-app",
       "rules": {
         "prefer-destructuring": "off"
-      }
+      },
+      "plugins": [
+        "jest",
+        "import"
+      ]
     },
     "babel": {
       "presets": [
-        "react-app",
-        "babel-preset-env",
-        "babel-preset-react"
+        "@babel/preset-react"
+        "@babel/preset-env",
       ],
       "plugins": [
-        "transform-class-properties"
+        "transform-object-rest-spread"
       ]
     },
     "jest": {
@@ -68,7 +66,13 @@ npm manifest:
       "testRegex": "[\\w+]\\.test\\.js$",
       "transform": {
         "^.+\\.js$": "babel-jest"
-      }
+      },
+      "globals": {
+        "DEBUG": false
+      },
+      "transformIgnorePatterns": [
+        "<rootDir>/node_modules/"
+      ]
     },
     "devDependencies": {
       "babel-cli": "^6.13.2",
@@ -81,6 +85,7 @@ npm manifest:
     },
     "dependencies": {
       "babel-plugin-transform-class-properties": "^6.24.1",
+      "babel-plugin-transform-object-rest-spread": "^6.26.0",
       "babel-preset-env": "^1.7.0",
       "babel-preset-react": "^6.24.1",
       "babel-preset-react-app": "^9.0.0"
@@ -1670,7 +1675,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/babel-plugin-syntax-jsx/-/babel-plugin-syntax-jsx-6.18.0.tgz#0af32a9a6e13ca7a3fd5069e62d7b0f58d0d8946"
     integrity sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=
   
-  babel-plugin-syntax-object-rest-spread@^6.13.0:
+  babel-plugin-syntax-object-rest-spread@^6.13.0, babel-plugin-syntax-object-rest-spread@^6.8.0:
     version "6.13.0"
     resolved "https://registry.yarnpkg.com/babel-plugin-syntax-object-rest-spread/-/babel-plugin-syntax-object-rest-spread-6.13.0.tgz#fd6536f2bce13836ffa3a5458c4903a597bb3bf5"
     integrity sha1-/WU28rzhODb/o6VFjEkDpZe7O/U=
@@ -1905,6 +1910,14 @@ Lockfile:
     dependencies:
       babel-plugin-syntax-flow "^6.18.0"
       babel-runtime "^6.22.0"
+  
+  babel-plugin-transform-object-rest-spread@^6.26.0:
+    version "6.26.0"
+    resolved "https://registry.yarnpkg.com/babel-plugin-transform-object-rest-spread/-/babel-plugin-transform-object-rest-spread-6.26.0.tgz#0f36692d50fef6b7e2d4b3ac1478137a963b7b06"
+    integrity sha1-DzZpLVD+9rfi1LOsFHgTepY7ewY=
+    dependencies:
+      babel-plugin-syntax-object-rest-spread "^6.8.0"
+      babel-runtime "^6.26.0"
   
   babel-plugin-transform-react-display-name@^6.23.0:
     version "6.25.0"

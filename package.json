@@ -29,11 +29,11 @@
   },
   "babel": {
     "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
+      "babel-preset-env",
+      "babel-preset-react"
     ],
     "plugins": [
-      "transform-class-properties"
+      "transform-object-rest-spread"
     ]
   },
   "jest": {
@@ -41,19 +41,25 @@
     "testRegex": "[\\w+]\\.test\\.js$",
     "transform": {
       "^.+\\.js$": "babel-jest"
-    }
+    },
+    "globals": {
+      "DEBUG": false
+    },
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/"
+    ]
   },
   "devDependencies": {
     "babel-cli": "^6.13.2",
     "babel-core": "^6.13.2",
-    "babel-jest": "^19.0.0",
     "eslint": "^6.1.0",
     "in-publish": "^2.0.0",
-    "jest": "^24.8.0",
+    "jest": "^20.0.4",
     "prettier": "^1.17.1"
   },
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-app": "^9.0.0"

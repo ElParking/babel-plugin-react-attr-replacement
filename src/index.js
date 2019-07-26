@@ -17,13 +17,11 @@ export default function babelPluginReactDataTestCamelcaseComponent({
     if (!hasDataAttribute) {
       node.attributes.forEach((attr) => {
         if (attr.name && attr.name.name === COMPONENT_ATTRIBUTE) {
-          node.attributes.push({
-            ...attr,
-            name: {
-              ...attr.name,
-              name: DATA_ATTRIBUTE,
-            },
-          })
+          node.attributes.push(
+            Object.assign({}, attr, {
+              name: Object.assign({}, attr.name, { name: DATA_ATTRIBUTE }),
+            })
+          )
         }
       })
     }
