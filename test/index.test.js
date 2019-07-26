@@ -76,12 +76,24 @@ describe('babelPluginReactDataTestCamelcaseComponent()', () => {
     ).toMatchSnapshot()
   })
 
-  it('handles a inline component', () => {
+  it('handles a arrow function component', () => {
     expect(
       transform(`
       const MyComponent2 = () => {
         return <SomeOtherComponent dataTest={\`description-id-\${t}\`}></SomeOtherComponent>;
       }
+    `)
+    ).toMatchSnapshot()
+  })
+
+  it('handles a resumed arrow function component', () => {
+    expect(
+      transform(`
+      const MyComponent2 = () => (
+        <div>
+          <div dataTest={\`description-id-\${t}\`}></div>
+        </div>
+      )
     `)
     ).toMatchSnapshot()
   })
@@ -144,6 +156,43 @@ describe('babelPluginReactDataTestCamelcaseComponent()', () => {
           return <MyComponent1 dataTest="id-info" />;
         }
       }
+    `)
+    ).toMatchSnapshot()
+  })
+
+  it('handle properly a large example', () => {
+    expect(
+      transform(`
+      import React from 'react'
+      import PropTypes from 'prop-types'
+
+      const PrivacyLink = styled.a\`
+        text-decoration: underline;
+        color: inherit;
+      \`
+
+      const CookieBanner1 = () => 
+        <CookieBannerOverlay>
+          <div dataTest='cookie-banner-accept-button'>Hi!</div>
+        </CookieBannerOverlay>
+      const CookieBanner2 = ({ url, onAccept }) => (
+        <CookieBannerOverlay>
+          <Flex flexWrap='wrap'>
+              <Box mb='1em' flex='0 1 auto'>
+                  <Copy padding='0' size='xxSmall' fontWeight='book' lineHeight='1.5em' color='darkGray'>
+                      Text
+                  </Copy>
+              </Box>
+              <Flex flex='0 1 100%' justifyContent='center'>
+                  <AcceptButton onClick={onAccept} width='12em' dataTest='cookie-banner-accept-button'>
+                      <Copy padding='0' size='xxSmall' transform='uppercase' color='darkGray'>
+                          Accept
+                      </Copy>
+                  </AcceptButton>
+              </Flex>
+          </Flex>
+      </CookieBannerOverlay>
+    )
     `)
     ).toMatchSnapshot()
   })

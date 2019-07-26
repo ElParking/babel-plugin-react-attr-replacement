@@ -6,6 +6,34 @@ const DATA_ATTRIBUTE = 'data-test'
 export default function babelPluginReactDataTestCamelcaseComponent({
   types: t,
 }) {
+  function replaceAttribute(path) {
+    const openingElement = path.get('openingElement')
+    const { node } = openingElement
+
+    const hasDataAttribute = node.attributes.some((attribute) =>
+      t.isJSXIdentifier(attribute.name, { name: DATA_ATTRIBUTE })
+    )
+
+    if (!hasDataAttribute) {
+      node.attributes.forEach((attr) => {
+        if (attr.name && attr.name.name === COMPONENT_ATTRIBUTE) {
+          node.attributes.push({
+            ...attr,
+            name: {
+              ...attr.name,
+              name: DATA_ATTRIBUTE,
+            },
+          })
+        }
+      })
+    }
+
+    path
+      .get('children')
+      .filter((child) => child.type === 'JSXElement')
+      .forEach(replaceAttribute)
+  }
+
   function fileDetails({ opts: { filename } }) {
     if (filename === 'unknown' || filename == null) {
       return null
@@ -61,13 +89,6 @@ export default function babelPluginReactDataTestCamelcaseComponent({
   }
 
   function shouldProcessPotentialComponent(path, name, state) {
-    if (!path.getFunctionParent().isProgram()) {
-      return false
-    }
-    if (path.parentPath.isAssignmentExpression()) {
-      return false
-    }
-
     const { onlyRootComponents = false } = state.opts || {}
     if (!onlyRootComponents) {
       return true
@@ -108,31 +129,9 @@ export default function babelPluginReactDataTestCamelcaseComponent({
 
   const returnStatementVisitor = {
     JSXElement(path) {
-      const openingElement = path.get('openingElement')
-      const { node } = openingElement
-
       // We never want to go into a tree of JSX elements, only ever process the top-level item
       path.skip()
-
-      const hasDataAttribute = node.attributes.some((attribute) =>
-        t.isJSXIdentifier(attribute.name, { name: DATA_ATTRIBUTE })
-      )
-
-      if (hasDataAttribute) {
-        return
-      }
-
-      node.attributes.forEach((attr) => {
-        if (attr.name && attr.name.name === COMPONENT_ATTRIBUTE) {
-          node.attributes.push({
-            ...attr,
-            name: {
-              ...attr.name,
-              name: DATA_ATTRIBUTE,
-            },
-          })
-        }
-      })
+      replaceAttribute(path)
     },
   }
 
@@ -175,10 +174,7 @@ export default function babelPluginReactDataTestCamelcaseComponent({
       path,
       state
     ) => {
-      const { name, process, overrides } = evaluatePotentialComponent(
-        path,
-        state
-      )
+      const { process, overrides } = evaluatePotentialComponent(path, state)
       if (!process) {
         return
       }
@@ -187,9 +183,9 @@ export default function babelPluginReactDataTestCamelcaseComponent({
         path.isArrowFunctionExpression() &&
         !path.get('body').isBlockStatement()
       ) {
-        path.traverse(returnStatementVisitor, { name, source: path, overrides })
+        path.traverse(returnStatementVisitor, { source: path, overrides })
       } else {
-        path.traverse(functionVisitor, { name, source: path, overrides })
+        path.traverse(functionVisitor, { source: path, overrides })
       }
     },
   }

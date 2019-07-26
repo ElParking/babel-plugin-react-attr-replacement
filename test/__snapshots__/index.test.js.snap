@@ -3,7 +3,7 @@
 exports[`babelPluginReactDataTestCamelcaseComponent() adds the attribute to the first non-composite component 1`] = `
 "function MyComponent() {
   const t = 1;
-  return <SomeOtherComponent><div><div dataTest={\`description-id-\${t}\`} /></div></SomeOtherComponent>;
+  return <SomeOtherComponent><div><div dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`} /></div></SomeOtherComponent>;
 }"
 `;
 
@@ -23,6 +23,36 @@ exports[`babelPluginReactDataTestCamelcaseComponent() handle properly a class re
     return <div dataTest=\\"id-info\\" data-test=\\"id-info\\">{this.renderAnotherThing()}</div>;
   }
 }"
+`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handle properly a large example 1`] = `
+"import React from 'react';
+import PropTypes from 'prop-types';
+
+const PrivacyLink = styled.a\`
+        text-decoration: underline;
+        color: inherit;
+      \`;
+
+const CookieBanner1 = () => <CookieBannerOverlay>
+          <div dataTest=\\"cookie-banner-accept-button\\" data-test=\\"cookie-banner-accept-button\\">Hi!</div>
+        </CookieBannerOverlay>;
+const CookieBanner2 = ({ url, onAccept }) => <CookieBannerOverlay>
+          <Flex flexWrap=\\"wrap\\">
+              <Box mb=\\"1em\\" flex=\\"0 1 auto\\">
+                  <Copy padding=\\"0\\" size=\\"xxSmall\\" fontWeight=\\"book\\" lineHeight=\\"1.5em\\" color=\\"darkGray\\">
+                      Text
+                  </Copy>
+              </Box>
+              <Flex flex=\\"0 1 100%\\" justifyContent=\\"center\\">
+                  <AcceptButton onClick={onAccept} width=\\"12em\\" dataTest=\\"cookie-banner-accept-button\\" data-test=\\"cookie-banner-accept-button\\">
+                      <Copy padding=\\"0\\" size=\\"xxSmall\\" transform=\\"uppercase\\" color=\\"darkGray\\">
+                          Accept
+                      </Copy>
+                  </AcceptButton>
+              </Flex>
+          </Flex>
+      </CookieBannerOverlay>;"
 `;
 
 exports[`babelPluginReactDataTestCamelcaseComponent() handle properly passing attributes beetween class render methods 1`] = `
@@ -55,6 +85,12 @@ exports[`babelPluginReactDataTestCamelcaseComponent() handle when bail early if 
 }"
 `;
 
+exports[`babelPluginReactDataTestCamelcaseComponent() handles a arrow function component 1`] = `
+"const MyComponent2 = () => {
+  return <SomeOtherComponent dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`}></SomeOtherComponent>;
+};"
+`;
+
 exports[`babelPluginReactDataTestCamelcaseComponent() handles a conlfict 1`] = `
 "function MyComponent() {
   return <div data-test=\\"id-test-1\\" dataTest=\\"description-id\\" />;
@@ -67,13 +103,13 @@ exports[`babelPluginReactDataTestCamelcaseComponent() handles a data-test explic
 }"
 `;
 
-exports[`babelPluginReactDataTestCamelcaseComponent() handles a inline component 1`] = `
-"const MyComponent2 = () => {
-  return <SomeOtherComponent dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`}></SomeOtherComponent>;
-};"
-`;
-
 exports[`babelPluginReactDataTestCamelcaseComponent() handles a inline component without return 1`] = `"const MyComponent3 = () => <SomeOtherComponent dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`}></SomeOtherComponent>;"`;
+
+exports[`babelPluginReactDataTestCamelcaseComponent() handles a resumed arrow function component 1`] = `
+"const MyComponent2 = () => <div>
+          <div dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`}></div>
+        </div>;"
+`;
 
 exports[`babelPluginReactDataTestCamelcaseComponent() handles simple complex returns 1`] = `
 "function MyComponent() {

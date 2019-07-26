@@ -19,22 +19,25 @@
     "lib"
   ],
   "eslintConfig": {
-    "extends": [
-      "plugin:shopify/node",
-      "plugin:shopify/esnext"
-    ],
     "rules": {
       "prefer-destructuring": "off"
-    }
+    },
+    "plugins": [
+      "jest",
+      "import"
+    ]
   },
   "babel": {
     "presets": [
-      [
-        "babel-preset-shopify"
-      ]
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "transform-class-properties"
     ]
   },
   "jest": {
+    "cache": false,
     "testRegex": "[\\w+]\\.test\\.js$",
     "transform": {
       "^.+\\.js$": "babel-jest"
@@ -44,12 +47,15 @@
     "babel-cli": "^6.13.2",
     "babel-core": "^6.13.2",
     "babel-jest": "^19.0.0",
-    "babel-preset-shopify": "^16.0.0",
     "eslint": "^6.1.0",
-    "eslint-plugin-shopify": "^30.0.1",
     "in-publish": "^2.0.0",
     "jest": "^24.8.0",
     "prettier": "^1.17.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-app": "^9.0.0"
+  }
 }
