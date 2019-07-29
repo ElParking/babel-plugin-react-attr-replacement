@@ -1,25 +1,50 @@
 import { extname, basename, dirname } from 'path'
 
-const COMPONENT_ATTRIBUTE = 'dataTest'
-const DATA_ATTRIBUTE = 'data-test'
+const COMPONENT_ATTRIBUTE_NAME = 'dataTest'
+const COMPONENT_ATTRIBUTE_REPLACEMENT_NAME = 'data-test'
 
-export default function babelPluginReactDataTestCamelcaseComponent({
-  types: t,
-}) {
-  function replaceAttribute(path) {
+export const DEFAULT_PROPS = {
+  attributeName: COMPONENT_ATTRIBUTE_NAME,
+  replaceAttributeName: COMPONENT_ATTRIBUTE_REPLACEMENT_NAME,
+}
+
+export function getReplaceOptions({ opts }) {
+  if (!opts.replaceAttributeName) {
+    return {
+      ...DEFAULT_PROPS,
+    }
+  }
+
+  if (!opts.attributeName) {
+    return
+  }
+
+  if (opts.attributeName === opts.replaceAttributeName) {
+    return
+  }
+
+  return opts
+}
+
+export default function babelPluginReactDataTestCamelcaseComponent({ types }) {
+  function replaceAttribute(path, { attributeName, replaceAttributeName }) {
+    if (!replaceAttributeName) {
+      return
+    }
     const openingElement = path.get('openingElement')
     const { node } = openingElement
-
     const hasDataAttribute = node.attributes.some((attribute) =>
-      t.isJSXIdentifier(attribute.name, { name: DATA_ATTRIBUTE })
+      types.isJSXIdentifier(attribute.name, { name: replaceAttributeName })
     )
 
     if (!hasDataAttribute) {
       node.attributes.forEach((attr) => {
-        if (attr.name && attr.name.name === COMPONENT_ATTRIBUTE) {
+        if (attr.name && attr.name.name === attributeName) {
           node.attributes.push(
             Object.assign({}, attr, {
-              name: Object.assign({}, attr.name, { name: DATA_ATTRIBUTE }),
+              name: Object.assign({}, attr.name, {
+                name: replaceAttributeName,
+              }),
             })
           )
         }
@@ -68,21 +93,11 @@ export default function babelPluginReactDataTestCamelcaseComponent({
 
   function evaluatePotentialComponent(path, state) {
     const name = nameForReactComponent(path, state.file)
-    const overrides = name && getoverrides(name, state.opts.overrides)
-
-    let process
-
-    if (overrides != null && overrides.process != null) {
-      process = overrides.process
-    } else {
-      process =
-        name != null && shouldProcessPotentialComponent(path, name, state)
-    }
-
+    const process =
+      name != null && shouldProcessPotentialComponent(path, name, state)
     return {
-      name: (overrides && overrides.name) || name || '',
+      name: name || '',
       process,
-      overrides,
     }
   }
 
@@ -109,7 +124,7 @@ export default function babelPluginReactDataTestCamelcaseComponent({
       node: { id },
     } = path
 
-    if (t.isIdentifier(id)) {
+    if (types.isIdentifier(id)) {
       return id.name
     }
 
@@ -126,25 +141,24 @@ export default function babelPluginReactDataTestCamelcaseComponent({
   }
 
   const returnStatementVisitor = {
-    JSXElement(path) {
+    JSXElement(path, { opts }) {
       // We never want to go into a tree of JSX elements, only ever process the top-level item
       path.skip()
-      replaceAttribute(path)
+      replaceAttribute(path, opts)
     },
   }
 
   const functionVisitor = {
-    ReturnStatement(path) {
+    ReturnStatement(path, { opts }) {
       const arg = path.get('argument')
-
       if (arg.isIdentifier()) {
         const binding = path.scope.getBinding(arg.node.name)
         if (binding == null) {
           return
         }
-        binding.path.traverse(returnStatementVisitor)
+        binding.path.traverse(returnStatementVisitor, { opts })
       } else {
-        path.traverse(returnStatementVisitor)
+        path.traverse(returnStatementVisitor, { opts })
       }
     },
   }
@@ -161,18 +175,20 @@ export default function babelPluginReactDataTestCamelcaseComponent({
         .filter((bodyPath) => {
           const { key } = bodyPath.node
           return (
-            bodyPath.isClassMethod() && t.isIdentifier(key) && !key.computed
+            bodyPath.isClassMethod() && types.isIdentifier(key) && !key.computed
           )
         })
         .forEach((renderPath) => {
-          renderPath.traverse(functionVisitor)
+          renderPath.traverse(functionVisitor, {
+            opts: getReplaceOptions(state),
+          })
         })
     },
     'FunctionDeclaration|FunctionExpression|ArrowFunctionExpression': (
       path,
       state
     ) => {
-      const { process, overrides } = evaluatePotentialComponent(path, state)
+      const { process } = evaluatePotentialComponent(path, state)
       if (!process) {
         return
       }
@@ -181,9 +197,15 @@ export default function babelPluginReactDataTestCamelcaseComponent({
         path.isArrowFunctionExpression() &&
         !path.get('body').isBlockStatement()
       ) {
-        path.traverse(returnStatementVisitor, { source: path, overrides })
+        path.traverse(returnStatementVisitor, {
+          source: path,
+          opts: getReplaceOptions(state),
+        })
       } else {
-        path.traverse(functionVisitor, { source: path, overrides })
+        path.traverse(functionVisitor, {
+          source: path,
+          opts: getReplaceOptions(state),
+        })
       }
     },
   }
@@ -195,15 +217,5 @@ export default function babelPluginReactDataTestCamelcaseComponent({
         path.traverse(programVisitor, state)
       },
     },
-  }
-}
-
-function getoverrides(component, overrides = {}) {
-  const overide = overrides.hasOwnProperty(component)
-    ? overrides[component]
-    : {}
-  return {
-    name: overide.name || component,
-    process: overide.process,
   }
 }

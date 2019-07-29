@@ -11,7 +11,21 @@ describe('babelPluginReactDataTestCamelcaseComponent()', () => {
     `)
     ).toMatchSnapshot()
   })
-
+  it('handles a data-test explicit definition with expecific params', () => {
+    expect(
+      transform(
+        `
+      function MyComponent() {
+        return <div key='uno' data-test='id-test-2' data-info='my data info'/>;
+      }
+    `,
+        {
+          attributeName: 'data-info',
+          replaceAttributeName: 'myDataInfo',
+        }
+      )
+    ).toMatchSnapshot()
+  })
   it('handles simple returns', () => {
     expect(
       transform(`
