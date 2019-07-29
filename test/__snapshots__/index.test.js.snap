@@ -3,7 +3,7 @@
 exports[`babelPluginReactDataTestCamelcaseComponent() adds the attribute to the first non-composite component 1`] = `
 "function MyComponent() {
   const t = 1;
-  return <SomeOtherComponent><div><div dataTest={\`description-id-\${t}\`} /></div></SomeOtherComponent>;
+  return <SomeOtherComponent><div><div dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`} /></div></SomeOtherComponent>;
 }"
 `;
 
@@ -35,7 +35,7 @@ const PrivacyLink = styled.a\`
       \`;
 
 const CookieBanner1 = () => <CookieBannerOverlay>
-          <div dataTest=\\"cookie-banner-accept-button\\">Hi!</div>
+          <div dataTest=\\"cookie-banner-accept-button\\" data-test=\\"cookie-banner-accept-button\\">Hi!</div>
         </CookieBannerOverlay>;
 const CookieBanner2 = ({ url, onAccept }) => <CookieBannerOverlay>
           <Flex flexWrap=\\"wrap\\">
@@ -45,7 +45,7 @@ const CookieBanner2 = ({ url, onAccept }) => <CookieBannerOverlay>
                   </Copy>
               </Box>
               <Flex flex=\\"0 1 100%\\" justifyContent=\\"center\\">
-                  <AcceptButton onClick={onAccept} width=\\"12em\\" dataTest=\\"cookie-banner-accept-button\\">
+                  <AcceptButton onClick={onAccept} width=\\"12em\\" dataTest=\\"cookie-banner-accept-button\\" data-test=\\"cookie-banner-accept-button\\">
                       <Copy padding=\\"0\\" size=\\"xxSmall\\" transform=\\"uppercase\\" color=\\"darkGray\\">
                           Accept
                       </Copy>
@@ -113,7 +113,7 @@ exports[`babelPluginReactDataTestCamelcaseComponent() handles a inline component
 
 exports[`babelPluginReactDataTestCamelcaseComponent() handles a resumed arrow function component 1`] = `
 "const MyComponent2 = () => <div>
-          <div dataTest={\`description-id-\${t}\`}></div>
+          <div dataTest={\`description-id-\${t}\`} data-test={\`description-id-\${t}\`}></div>
         </div>;"
 `;
 

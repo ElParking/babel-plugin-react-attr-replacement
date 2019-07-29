@@ -27,7 +27,8 @@ export function getReplaceOptions({ opts }) {
 }
 
 export default function babelPluginReactDataTestCamelcaseComponent({ types }) {
-  function replaceAttribute(path, { attributeName, replaceAttributeName }) {
+  function replaceAttribute(path, opts) {
+    const { attributeName, replaceAttributeName } = opts
     if (!replaceAttributeName) {
       return
     }
@@ -54,7 +55,7 @@ export default function babelPluginReactDataTestCamelcaseComponent({ types }) {
     path
       .get('children')
       .filter((child) => child.type === 'JSXElement')
-      .forEach(replaceAttribute)
+      .forEach((child) => replaceAttribute(child, opts))
   }
 
   function fileDetails({ opts: { filename } }) {

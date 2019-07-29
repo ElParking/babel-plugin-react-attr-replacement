@@ -1,9 +1,9 @@
 {
-  "name": "babel-plugin-react-attr-replacement",
+  "name": "@elparking/babel-plugin-react-attr-replacement",
   "description": "This plugin transforms a 'dataTest' attribute to a 'data-test' attribute in React components.",
   "version": "0.0.2",
   "main": "lib/index.js",
-  "author": "elParking <antonio.juan@elparking.com>",
+  "author": "<antonio.juan@elparking.com>",
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -63,5 +63,29 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-app": "^9.0.0"
-  }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElParking/babel-plugin-react-attr-replacement.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ElParking/babel-plugin-react-attr-replacement/issues"
+  },
+  "homepage": "https://github.com/ElParking/babel-plugin-react-attr-replacement#readme",
+  "keywords": [
+    "This",
+    "plugin",
+    "transforms",
+    "a",
+    "duplicate",
+    "a",
+    "attribute",
+    "in",
+    "React",
+    "components"
+  ]
 }

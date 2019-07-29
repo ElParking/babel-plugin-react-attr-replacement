@@ -173,7 +173,6 @@ describe('babelPluginReactDataTestCamelcaseComponent()', () => {
     `)
     ).toMatchSnapshot()
   })
-
   it('handle properly a large example', () => {
     expect(
       transform(`
