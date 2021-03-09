@@ -1,0 +1,50 @@
+def generateComposeProjectName() {
+  "jenkins-${env.JOB_NAME.replace("/", "-")}-${env.GIT_COMMIT.take(10)}".replace("%2F", "_").toLowerCase()
+}
+
+pipeline {
+  environment {
+    PROJECT_NAME = "${generateComposeProjectName()}"
+    NPMRC_FILE = credentials('npmrc-file-publish')
+  }
+
+  agent {
+    label 'test&&linux&&docker19'
+  }
+
+  stages {
+    stage('Tests') {
+      steps {
+        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.PROJECT_NAME}:/home/node/app/node_modules -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:12.16.1 yarn install --pure-lockfile"
+        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.PROJECT_NAME}:/home/node/app/node_modules -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:12.16.1 yarn test"
+      }
+    }
+
+    stage('Publish') {
+      when {
+       buildingTag()
+      }
+
+      steps {
+        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:12.16.1 yarn build"
+        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:12.16.1 yarn publish"
+      }
+
+      post {
+        success {
+          slackSend (channel: '#web', color: '#0000FF', message: ":package: <https://github.com/orgs/ElParking/packages?repo_name=babel-plugin-react-attr-replacement|@elparking/babel-plugin-react-attr-replacement>@${env.BRANCH_NAME.substring(1)} published!")
+        }
+      }
+    }
+  }
+
+  post {
+    failure {
+      script {
+        if (env.BRANCH_NAME == "master") {
+          slackSend (channel: '#web', color: '#FF0000', message: ":red_circle: tests are failing in ${env.JOB_NAME} (<${env.RUN_DISPLAY_URL}|View logs>)")
+        }
+      }
+    }
+  }
+}
