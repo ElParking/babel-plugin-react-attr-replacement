@@ -20,13 +20,18 @@ pipeline {
       }
     }
 
+    stage('Build') {
+      steps {
+        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.PROJECT_NAME}:/home/node/app/node_modules -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:12.16.1 yarn build"
+      }
+    }
+
     stage('Publish') {
       when {
        buildingTag()
       }
 
       steps {
-        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:12.16.1 yarn build"
         sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:12.16.1 yarn publish"
       }
 
