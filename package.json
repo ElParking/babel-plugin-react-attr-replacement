@@ -1,7 +1,7 @@
 {
   "name": "@elparking/babel-plugin-react-attr-replacement",
   "description": "This plugin transforms a 'dataTest' attribute to a 'data-test' attribute in React components.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "lib/index.js",
   "author": "<antonio.juan@elparking.com>",
   "license": "MIT",
