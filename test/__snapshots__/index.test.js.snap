@@ -17,10 +17,10 @@ exports[`babelPluginReactDataTestCamelcaseComponent() does not add attributes to
 exports[`babelPluginReactDataTestCamelcaseComponent() handle properly a class render methods 1`] = `
 "class MyComponent extends React.Component {
   renderAnotherThing() {
-    return <div dataTest=\\"id-info-AnotherThing\\" data-test=\\"id-info-AnotherThing\\" />;
+    return <div dataTest="id-info-AnotherThing" data-test="id-info-AnotherThing" />;
   }
   render() {
-    return <div dataTest=\\"id-info\\" data-test=\\"id-info\\">{this.renderAnotherThing()}</div>;
+    return <div dataTest="id-info" data-test="id-info">{this.renderAnotherThing()}</div>;
   }
 }"
 `;
@@ -28,25 +28,26 @@ exports[`babelPluginReactDataTestCamelcaseComponent() handle properly a class re
 exports[`babelPluginReactDataTestCamelcaseComponent() handle properly a large example 1`] = `
 "import React from 'react';
 import PropTypes from 'prop-types';
-
 const PrivacyLink = styled.a\`
         text-decoration: underline;
         color: inherit;
       \`;
-
 const CookieBanner1 = () => <CookieBannerOverlay>
-          <div dataTest=\\"cookie-banner-accept-button\\" data-test=\\"cookie-banner-accept-button\\">Hi!</div>
+          <div dataTest='cookie-banner-accept-button' data-test='cookie-banner-accept-button'>Hi!</div>
         </CookieBannerOverlay>;
-const CookieBanner2 = ({ url, onAccept }) => <CookieBannerOverlay>
-          <Flex flexWrap=\\"wrap\\">
-              <Box mb=\\"1em\\" flex=\\"0 1 auto\\">
-                  <Copy padding=\\"0\\" size=\\"xxSmall\\" fontWeight=\\"book\\" lineHeight=\\"1.5em\\" color=\\"darkGray\\">
+const CookieBanner2 = ({
+  url,
+  onAccept
+}) => <CookieBannerOverlay>
+          <Flex flexWrap='wrap'>
+              <Box mb='1em' flex='0 1 auto'>
+                  <Copy padding='0' size='xxSmall' fontWeight='book' lineHeight='1.5em' color='darkGray'>
                       Text
                   </Copy>
               </Box>
-              <Flex flex=\\"0 1 100%\\" justifyContent=\\"center\\">
-                  <AcceptButton onClick={onAccept} width=\\"12em\\" dataTest=\\"cookie-banner-accept-button\\" data-test=\\"cookie-banner-accept-button\\">
-                      <Copy padding=\\"0\\" size=\\"xxSmall\\" transform=\\"uppercase\\" color=\\"darkGray\\">
+              <Flex flex='0 1 100%' justifyContent='center'>
+                  <AcceptButton onClick={onAccept} width='12em' dataTest='cookie-banner-accept-button' data-test='cookie-banner-accept-button'>
+                      <Copy padding='0' size='xxSmall' transform='uppercase' color='darkGray'>
                           Accept
                       </Copy>
                   </AcceptButton>
@@ -61,18 +62,15 @@ exports[`babelPluginReactDataTestCamelcaseComponent() handle properly passing at
     return <div dataTest={this.props.dataTest} data-test={this.props.dataTest}>Info</div>;
   }
 }
-
 MyComponent1.propTypes = {
   dataTest: PropTypes.string
 };
-
 MyComponent1.defaultProps = {
   dataTest: PropTypes.string
 };
-
 class MyComponent2 extends React.Component {
   render() {
-    return <MyComponent1 dataTest=\\"id-info\\" data-test=\\"id-info\\" />;
+    return <MyComponent1 dataTest="id-info" data-test="id-info" />;
   }
 }"
 `;
@@ -80,7 +78,7 @@ class MyComponent2 extends React.Component {
 exports[`babelPluginReactDataTestCamelcaseComponent() handle when bail early if we are in a different function than the component 1`] = `
 "class MyComponent2 extends React.Component {
   render() {
-    return <MyComponent1 dataTest=\\"id-info\\" data-test=\\"id-info\\" />;
+    return <MyComponent1 dataTest="id-info" data-test="id-info" />;
   }
 }"
 `;
@@ -93,19 +91,19 @@ exports[`babelPluginReactDataTestCamelcaseComponent() handles a arrow function c
 
 exports[`babelPluginReactDataTestCamelcaseComponent() handles a conlfict 1`] = `
 "function MyComponent() {
-  return <div data-test=\\"id-test-1\\" dataTest=\\"description-id\\" />;
+  return <div data-test='id-test-1' dataTest="description-id" />;
 }"
 `;
 
 exports[`babelPluginReactDataTestCamelcaseComponent() handles a data-test explicit definition 1`] = `
 "function MyComponent() {
-  return <div key=\\"uno\\" data-test=\\"id-test-2\\" data-info=\\"my data info\\" />;
+  return <div key='uno' data-test='id-test-2' data-info='my data info' />;
 }"
 `;
 
 exports[`babelPluginReactDataTestCamelcaseComponent() handles a data-test explicit definition with expecific params 1`] = `
 "function MyComponent() {
-  return <div key=\\"uno\\" data-test=\\"id-test-2\\" data-info=\\"my data info\\" myDataInfo=\\"my data info\\" />;
+  return <div key='uno' data-test='id-test-2' data-info='my data info' myDataInfo='my data info' />;
 }"
 `;
 
@@ -133,6 +131,6 @@ exports[`babelPluginReactDataTestCamelcaseComponent() handles simple inline comp
 
 exports[`babelPluginReactDataTestCamelcaseComponent() handles simple returns 1`] = `
 "function MyComponent() {
-  return <div dataTest=\\"description-id\\" data-test=\\"description-id\\" />;
+  return <div dataTest="description-id" data-test="description-id" />;
 }"
 `;
