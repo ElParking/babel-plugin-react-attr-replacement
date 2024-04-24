@@ -1,3 +1,4 @@
+
 import { extname, basename, dirname } from 'path'
 
 const COMPONENT_ATTRIBUTE_NAME = 'dataTest'
