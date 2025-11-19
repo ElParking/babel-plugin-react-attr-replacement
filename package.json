@@ -1,98 +1,95 @@
 {
-  "name": "@elparking/babel-plugin-react-attr-replacement",
-  "description": "This plugin transforms a 'dataTest' attribute to a 'data-test' attribute in React components.",
-  "version": "0.2.0",
-  "main": "lib/index.js",
-  "author": "<antonio.juan@elparking.com>",
-  "license": "MIT",
-  "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "test": "jest",
-    "test:watch": "yarn run test -- --watch",
-    "check": "yarn run lint && yarn run test",
-    "build": "babel src --out-dir lib",
-    "version": "auto-changelog --package",
-    "inspect": "yarn audit --groups dependencies; [ $? -ge 8 ] && exit 1 || exit 0"
-  },
-  "files": [
-    "README.md",
-    "CHANGELOG.md",
-    "index.js",
-    "lib"
-  ],
-  "eslintConfig": {
-    "rules": {
-      "prefer-destructuring": "off"
-    },
-    "plugins": [
-      "jest",
-      "import"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react"
-    ],
-    "plugins": [
-      "@babel/plugin-transform-object-rest-spread"
-    ]
-  },
-  "jest": {
-    "cache": false,
-    "testRegex": "[\\w+]\\.test\\.js$",
-    "transform": {
-      "^.+\\.js$": "babel-jest"
-    },
-    "globals": {
-      "DEBUG": false
-    },
-    "transformIgnorePatterns": [
-      "<rootDir>/node_modules/"
-    ]
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.24.0",
-    "@babel/core": "^7.24.0",
-    "@babel/eslint-parser": "7.24.1",
-    "auto-changelog": "^2.2.1",
-    "eslint": "^7.5.0",
-    "eslint-plugin-jest": "^22.5.1",
-    "eslint-plugin-react": "^7.32.2",
-    "jest": "29.5.0",
-    "prettier": "2.3.1"
-  },
-  "dependencies": {
-    "@babel/plugin-transform-class-properties": "^7.24.0",
-    "@babel/plugin-transform-object-rest-spread": "^7.24.0",
-    "@babel/preset-env": "7.24.0",
-    "@babel/preset-react": "^7.24.0"
-  },
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ElParking/babel-plugin-react-attr-replacement.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
-  "bugs": {
-    "url": "https://github.com/ElParking/babel-plugin-react-attr-replacement/issues"
-  },
-  "homepage": "https://github.com/ElParking/babel-plugin-react-attr-replacement#readme",
-  "keywords": [
-    "This",
-    "plugin",
-    "transforms",
-    "a",
-    "duplicate",
-    "a",
-    "attribute",
-    "in",
-    "React",
-    "components"
-  ]
+	"name": "@elparking/babel-plugin-react-attr-replacement",
+	"description": "This plugin transforms a 'dataTest' attribute to a 'data-test' attribute in React components.",
+	"version": "0.2.2",
+	"main": "lib/index.js",
+	"author": "<antonio.juan@elparking.com>",
+	"license": "MIT",
+	"scripts": {
+		"lint": "eslint . --max-warnings 0",
+		"test": "jest",
+		"test:watch": "yarn run test -- --watch",
+		"check": "yarn run lint && yarn run test",
+		"build": "babel src --out-dir lib",
+		"version": "auto-changelog --package",
+		"inspect": "yarn audit --groups dependencies; [ $? -ge 8 ] && exit 1 || exit 0"
+	},
+	"files": [
+		"README.md",
+		"CHANGELOG.md",
+		"index.js",
+		"lib"
+	],
+	"eslintConfig": {
+		"rules": {
+			"prefer-destructuring": "off"
+		},
+		"plugins": [
+			"jest",
+			"import"
+		]
+	},
+	"babel": {
+		"presets": [
+			"@babel/preset-env",
+			"@babel/preset-react"
+		]
+	},
+	"jest": {
+		"cache": false,
+		"testRegex": "[\\w+]\\.test\\.js$",
+		"transform": {
+			"^.+\\.js$": "babel-jest"
+		},
+		"globals": {
+			"DEBUG": false
+		},
+		"transformIgnorePatterns": [
+			"<rootDir>/node_modules/"
+		]
+	},
+	"devDependencies": {
+		"@babel/cli": "7.28.3",
+		"@babel/core": "7.28.5",
+		"@babel/eslint-parser": "7.28.5",
+		"auto-changelog": "^2.2.1",
+		"eslint": "^7.5.0",
+		"eslint-plugin-jest": "29.0.1",
+		"eslint-plugin-react": "^7.32.2",
+		"jest": "29.5.0",
+		"prettier": "2.3.1"
+	},
+	"dependencies": {
+		"@babel/plugin-transform-class-properties": "7.27.1",
+		"@babel/plugin-transform-object-rest-spread": "7.28.4",
+		"@babel/preset-env": "7.28.5",
+		"@babel/preset-react": "7.28.5"
+	},
+	"directories": {
+		"lib": "lib",
+		"test": "test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ElParking/babel-plugin-react-attr-replacement.git"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/"
+	},
+	"bugs": {
+		"url": "https://github.com/ElParking/babel-plugin-react-attr-replacement/issues"
+	},
+	"homepage": "https://github.com/ElParking/babel-plugin-react-attr-replacement#readme",
+	"keywords": [
+		"This",
+		"plugin",
+		"transforms",
+		"a",
+		"duplicate",
+		"a",
+		"attribute",
+		"in",
+		"React",
+		"components"
+	]
 }
