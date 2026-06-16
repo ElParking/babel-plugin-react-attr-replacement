@@ -15,14 +15,14 @@ pipeline {
   stages {
     stage('Tests') {
       steps {
-        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.PROJECT_NAME}:/home/node/app/node_modules -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:22.18.0 yarn install --pure-lockfile"
-        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.PROJECT_NAME}:/home/node/app/node_modules -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:22.18.0 yarn test"
+        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.PROJECT_NAME}:/home/node/app/node_modules -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:22.18.0 sh -lc 'corepack enable && pnpm install --frozen-lockfile'"
+        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.PROJECT_NAME}:/home/node/app/node_modules -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:22.18.0 sh -lc 'corepack enable && pnpm test'"
       }
     }
 
     stage('Build') {
       steps {
-        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.PROJECT_NAME}:/home/node/app/node_modules -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:22.18.0 yarn build"
+        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.PROJECT_NAME}:/home/node/app/node_modules -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:22.18.0 sh -lc 'corepack enable && pnpm build'"
       }
     }
 
@@ -32,7 +32,7 @@ pipeline {
       }
 
       steps {
-        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:22.18.0 yarn publish"
+        sh "docker run --rm -w /home/node/app -v ${env.WORKSPACE}:/home/node/app -v ${env.NPMRC_FILE}:/home/node/app/.npmrc node:22.18.0 sh -lc 'corepack enable && pnpm publish --no-git-checks'"
       }
 
       post {

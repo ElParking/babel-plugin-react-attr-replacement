@@ -55,11 +55,14 @@ const ComponentThree = () => (
 ## Installation
 
 ```sh
-# yarn
-yarn add --dev babel-plugin-react-attr-replacement
+# pnpm
+pnpm add --save-dev babel-plugin-react-attr-replacement
 
 # npm
 npm install --save-dev babel-plugin-react-attr-replacement
+
+# yarn
+yarn add --dev babel-plugin-react-attr-replacement
 ```
 
 ## Usage

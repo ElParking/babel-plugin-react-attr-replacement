@@ -1,4 +1,3 @@
 /node_modules
-yarn-error.log
-yarn.lock
+pnpm-debug.log*
 ./babel-plugin-react-data-test-camelcase.code-workspace
