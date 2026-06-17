@@ -1,3 +1,4 @@
 /node_modules
 pnpm-debug.log*
 ./babel-plugin-react-data-test-camelcase.code-workspace
+.npmrc
